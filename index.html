@@ -708,7 +708,6 @@
             toggleShareMenu();
         }
         
-        // 生成海报（简化版提示）
        // 生成海报
 async function generatePoster() {
     // 选择要截图的区域（整个页面主体）
@@ -752,9 +751,6 @@ async function generatePoster() {
     
     toggleShareMenu();
 }
-
-        }
-        
         // 点击外部关闭分享菜单
         document.addEventListener('click', (e) => {
             const shareBtn = document.querySelector('.share-btn');
