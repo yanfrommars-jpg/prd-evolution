@@ -108,6 +108,166 @@
             animation: float 3s ease-in-out infinite;
         }
         
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            /* 基础字体优化 */
+            html {
+                font-size: 14px;
+            }
+            
+            /* 封面区域优化 */
+            .gradient-bg h1 {
+                font-size: 2rem !important;
+                line-height: 1.3;
+                padding: 0 1rem;
+            }
+            
+            .gradient-bg h2 {
+                font-size: 1.25rem !important;
+                padding: 0 1rem;
+            }
+            
+            .gradient-bg .glass-effect {
+                padding: 1.5rem !important;
+                margin: 0 1rem;
+            }
+            
+            .gradient-bg .text-xl {
+                font-size: 1rem !important;
+            }
+            
+            /* 图标大小优化 */
+            .gradient-bg .fa-file-alt,
+            .gradient-bg .fa-robot {
+                font-size: 3rem !important;
+            }
+            
+            .gradient-bg .fa-arrow-right {
+                font-size: 2rem !important;
+                margin: 0 1rem !important;
+            }
+            
+            /* 时间线优化 */
+            .grid.md\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* 左右对比卡片优化 */
+            .bg-gray-900,
+            .bg-gradient-to-br.from-blue-600 {
+                padding: 1.5rem !important;
+                margin-bottom: 1rem;
+            }
+            
+            /* 引用文字换行优化 */
+            .text-sm.italic {
+                word-break: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+            
+            /* 英文文本自动换行 */
+            p, span, div {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            /* 数据图表区域优化 */
+            .chart-ring {
+                width: 120px !important;
+                height: 120px !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem !important;
+            }
+            
+            /* 5个原则卡片优化 */
+            .expand-card {
+                padding: 1rem !important;
+            }
+            
+            .expand-card h3 {
+                font-size: 1rem !important;
+            }
+            
+            .expand-card .text-sm {
+                font-size: 0.875rem !important;
+            }
+            
+            /* 评论卡片优化 */
+            .bg-gradient-to-r.from-blue-50 {
+                padding: 1rem !important;
+            }
+            
+            .border-l-4 {
+                padding: 0.75rem !important;
+            }
+            
+            /* 表格优化 */
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            /* 分享按钮优化 */
+            .share-btn {
+                bottom: 20px !important;
+                right: 20px !important;
+            }
+            
+            .share-btn button {
+                width: 50px !important;
+                height: 50px !important;
+            }
+            
+            /* 进度条优化 */
+            #progress-bar {
+                height: 3px;
+            }
+            
+            /* 页脚优化 */
+            footer .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            footer .text-xl {
+                font-size: 1rem !important;
+            }
+        }
+        
+        /* 超小屏幕优化 */
+        @media (max-width: 480px) {
+            html {
+                font-size: 13px;
+            }
+            
+            .gradient-bg h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            .gradient-bg h2 {
+                font-size: 1.1rem !important;
+            }
+            
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            
+            .container {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+        }
+        
+        /* 确保文本自动换行 */
+        * {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
@@ -184,20 +344,20 @@
         
         <div class="container mx-auto px-6 text-center relative z-10">
             <div class="mb-8 float-animation">
-                <i class="fas fa-file-alt text-6xl text-white opacity-80"></i>
-                <i class="fas fa-arrow-right text-4xl text-white opacity-60 mx-6"></i>
-                <i class="fas fa-robot text-6xl text-white opacity-80"></i>
+                <i class="fas fa-file-alt text-4xl sm:text-6xl text-white opacity-80"></i>
+                <i class="fas fa-arrow-right text-2xl sm:text-4xl text-white opacity-60 mx-2 sm:mx-6"></i>
+                <i class="fas fa-robot text-4xl sm:text-6xl text-white opacity-80"></i>
             </div>
             
-            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
+            <h1 class="text-3xl sm:text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
                 PRD从未死去
             </h1>
-            <h2 class="text-3xl md:text-4xl font-bold text-white opacity-90 mb-12">
+            <h2 class="text-xl sm:text-3xl md:text-4xl font-bold text-white opacity-90 mb-12">
                 它只是<span class="text-orange-300">进化了</span>
             </h2>
             
-            <div class="glass-effect rounded-2xl p-8 max-w-3xl mx-auto">
-                <p class="text-xl md:text-2xl text-white font-medium typing-cursor" id="typing-text"></p>
+            <div class="glass-effect rounded-2xl p-4 sm:p-8 max-w-3xl mx-auto">
+                <p class="text-base sm:text-xl md:text-2xl text-white font-medium typing-cursor" id="typing-text"></p>
             </div>
             
             <div class="mt-16 animate-bounce">
@@ -209,8 +369,8 @@
     <!-- 第二部分：PRD演变历史 -->
     <section class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">PRD的演变历程</h2>
-            <p class="text-gray-500 text-center mb-16 scroll-reveal">从瀑布到敏捷，再到AI时代的进化之路</p>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 scroll-reveal px-4">PRD的演变历程</h2>
+            <p class="text-sm sm:text-base text-gray-500 text-center mb-8 sm:mb-16 scroll-reveal px-4">从瀑布到敏捷，再到AI时代的进化之路</p>
             
             <div class="max-w-5xl mx-auto relative">
                 <!-- 时间线 -->
@@ -298,8 +458,8 @@
     <!-- 第三部分：左右对比 - PRD演变 -->
     <section class="min-h-screen bg-white py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">PRD的本质转变</h2>
-            <p class="text-gray-500 text-center mb-16 scroll-reveal">看PRD如何从"文档"进化为"对齐工具"</p>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 scroll-reveal px-4">PRD的本质转变</h2>
+            <p class="text-sm sm:text-base text-gray-500 text-center mb-8 sm:mb-16 scroll-reveal px-4">看PRD如何从"文档"进化为"对齐工具"</p>
             
             <div class="max-w-6xl mx-auto">
                 <div class="grid md:grid-cols-2 gap-8">
@@ -366,7 +526,7 @@
     <!-- 第三部分：PM角色进化 -->
     <section class="min-h-screen bg-gray-50 py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">产品经理角色的进化</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-16 scroll-reveal px-4">产品经理角色的进化</h2>
             
             <div class="max-w-5xl mx-auto">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -487,8 +647,8 @@
     <!-- 第四部分：5个实用技巧 -->
     <section class="min-h-screen bg-white py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">现代PRD的5个实践原则</h2>
-            <p class="text-gray-500 text-center mb-16 scroll-reveal">来自一线产品经理的真实经验总结</p>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 scroll-reveal px-4">现代PRD的5个实践原则</h2>
+            <p class="text-sm sm:text-base text-gray-500 text-center mb-8 sm:mb-16 scroll-reveal px-4">来自一线产品经理的真实经验总结</p>
             
             <div class="max-w-4xl mx-auto space-y-4">
                 <!-- 技巧1 -->
@@ -631,8 +791,8 @@
     <!-- 页脚 -->
     <footer class="bg-gray-950 text-white py-12">
         <div class="container mx-auto px-6 text-center">
-            <p class="text-2xl font-bold mb-4">当AI能建万物</p>
-            <p class="text-xl text-orange-400 mb-8">人要知道什么值得建</p>
+            <p class="text-xl sm:text-2xl font-bold mb-4 px-4">当AI能建万物</p>
+            <p class="text-lg sm:text-xl text-orange-400 mb-8 px-4">人要知道什么值得建</p>
             <div class="flex justify-center gap-6 text-gray-400">
                 <span>参考文章：<a href="https://productify.substack.com/p/the-prd-isnt-dead-its-evolving-for" class="underline hover:text-white">PRD从未死去，它只是进化了</a></span>
             </div>
