@@ -1,0 +1,725 @@
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD从未死去，它只是进化了</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a365d 0%, #6b46c1 50%, #ed8936 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 100;
+            max-width: 280px;
+            white-space: normal;
+        }
+        
+        .tooltip:hover .tooltip-content {
+            opacity: 1;
+            bottom: 120%;
+        }
+        
+        .expand-card {
+            max-height: 80px;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .expand-card.expanded {
+            max-height: 500px;
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .chart-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .chart-ring circle {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+        
+        .share-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .generated-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .generated-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+        
+        .watermark {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+    </style>
+
+
+
+    <!-- 进度指示器 -->
+    <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 z-50 transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+
+    <!-- 分享按钮 -->
+    <div class="share-btn">
+        <button onclick="toggleShareMenu()" class="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white shadow-lg hover:shadow-2xl transition-all flex items-center justify-center">
+            <i class="fas fa-share-alt text-xl"></i>
+        </button>
+        <div id="share-menu" class="hidden absolute bottom-16 right-0 bg-white rounded-xl shadow-2xl p-3 space-y-2 w-48">
+            <button onclick="copyLink()" class="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg flex items-center gap-3">
+                <i class="fas fa-link text-gray-600"></i> 复制链接
+            </button>
+            <button onclick="generatePoster()" class="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg flex items-center gap-3">
+                <i class="fas fa-image text-gray-600"></i> 生成海报
+            </button>
+        </div>
+    </div>
+
+    <!-- 第一部分：封面 -->
+    <section class="min-h-screen gradient-bg flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="mb-8 float-animation">
+                <i class="fas fa-file-alt text-6xl text-white opacity-80"></i>
+                <i class="fas fa-arrow-right text-4xl text-white opacity-60 mx-6"></i>
+                <i class="fas fa-robot text-6xl text-white opacity-80"></i>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
+                PRD从未死去
+            </h1>
+            <h2 class="text-3xl md:text-4xl font-bold text-white opacity-90 mb-12">
+                它只是<span class="text-orange-300">进化了</span>
+            </h2>
+            
+            <div class="glass-effect rounded-2xl p-8 max-w-3xl mx-auto">
+                <p class="text-xl md:text-2xl text-white font-medium typing-cursor" id="typing-text"></p>
+            </div>
+            
+            <div class="mt-16 animate-bounce">
+                <i class="fas fa-chevron-down text-white text-3xl opacity-60"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二部分：PRD演变历史 -->
+    <section class="min-h-screen bg-gradient-to-b from-slate-50 to-white py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">PRD的演变历程</h2>
+            <p class="text-gray-500 text-center mb-16 scroll-reveal">从瀑布到敏捷，再到AI时代的进化之路</p>
+            
+            <div class="max-w-5xl mx-auto relative">
+                <!-- 时间线 -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-600 via-purple-600 to-orange-500"></div>
+                
+                <!-- 1980s-1990s -->
+                <div class="relative mb-12 scroll-reveal">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="bg-blue-600 text-white px-4 py-2 rounded-full font-bold z-10">1980s-1990s</div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="md:text-right">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">瀑布模型时代</h3>
+                            <p class="text-gray-600">厚重的需求规格说明书（SRS），动辄数百页，追求"一次做对"</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-4 rounded-xl">
+                                <i class="fas fa-file-alt text-2xl text-blue-600 mb-2"></i>
+                                <p class="text-sm text-gray-600">文档即契约</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2001 -->
+                <div class="relative mb-12 scroll-reveal">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="bg-purple-600 text-white px-4 py-2 rounded-full font-bold z-10">2001</div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="md:text-right flex items-start justify-end">
+                            <div class="bg-purple-100 p-4 rounded-xl">
+                                <i class="fas fa-running text-2xl text-purple-600 mb-2"></i>
+                                <p class="text-sm text-gray-600">敏捷宣言</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">敏捷革命</h3>
+                            <p class="text-gray-600">"可工作的软件胜过详尽的文档"，用户故事取代冗长规格</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2010s -->
+                <div class="relative mb-12 scroll-reveal">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="bg-indigo-600 text-white px-4 py-2 rounded-full font-bold z-10">2010s</div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="md:text-right">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">精益创业时代</h3>
+                            <p class="text-gray-600">假设驱动开发，MVP（最小可行产品）思维，文档让位于实验</p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-indigo-100 p-4 rounded-xl">
+                                <i class="fas fa-flask text-2xl text-indigo-600 mb-2"></i>
+                                <p class="text-sm text-gray-600">验证学习</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2020s -->
+                <div class="relative scroll-reveal">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="bg-orange-500 text-white px-4 py-2 rounded-full font-bold z-10">2020s</div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="md:text-right flex items-start justify-end">
+                            <div class="bg-orange-100 p-4 rounded-xl">
+                                <i class="fas fa-robot text-2xl text-orange-500 mb-2"></i>
+                                <p class="text-sm text-gray-600">AI协作</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">AI时代</h3>
+                            <p class="text-gray-600">模块化活态文档，人机协作写作，PRD回归"对齐工具"本质</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三部分：左右对比 - PRD演变 -->
+    <section class="min-h-screen bg-white py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">PRD的本质转变</h2>
+            <p class="text-gray-500 text-center mb-16 scroll-reveal">看PRD如何从"文档"进化为"对齐工具"</p>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- 左侧：传统PRD -->
+                    <div class="bg-gray-900 rounded-3xl p-8 text-white scroll-reveal tooltip">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="bg-red-500 text-xs font-bold px-3 py-1 rounded-full">传统思维</span>
+                            <i class="fas fa-book text-3xl opacity-60"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">厚重文档</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-file-alt text-red-400"></i>
+                                30-50页详尽规范
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-lock text-red-400"></i>
+                                一次性交付，难以修改
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-user-slash text-red-400"></i>
+                                写完没人看
+                            </li>
+                        </ul>
+                        <div class="mt-6 p-4 bg-gray-800 rounded-xl border-l-4 border-red-500">
+                            <p class="text-sm italic">"Massive documents that are stable but nobody visits."</p>
+                            <p class="text-xs text-gray-400 mt-1">"厚重的稳定文档，却无人问津"</p>
+                            <p class="text-xs text-gray-500 mt-2">— @product_guru | Product Community Discussion / 产品社区讨论</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧：AI时代PRD -->
+                    <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-8 text-white scroll-reveal tooltip">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="bg-green-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">AI时代</span>
+                            <i class="fas fa-network-wired text-3xl opacity-80"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">模块化简报</h3>
+                        <ul class="space-y-3 text-blue-100">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-layer-group text-green-300"></i>
+                                1页问题 + 2页方案
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-sync text-green-300"></i>
+                                活态文档，持续演进
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-users text-green-300"></i>
+                                团队对齐的核心工具
+                            </li>
+                        </ul>
+                        <div class="mt-6 p-4 bg-white bg-opacity-20 rounded-xl border-l-4 border-green-400">
+                            <p class="text-sm italic">"Teams that win are aligned on what to build and why they're building it."</p>
+                            <p class="text-xs text-blue-100 mt-1">"成功的团队，在构建什么和为什么构建上保持对齐"</p>
+                            <p class="text-xs text-blue-200 mt-2">— @sarah_chen | Top-voted Comment / 最高赞评论</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三部分：PM角色进化 -->
+    <section class="min-h-screen bg-gray-50 py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 scroll-reveal">产品经理角色的进化</h2>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- 左侧：旧角色 -->
+                    <div class="scroll-reveal">
+                        <div class="bg-white rounded-3xl p-8 card-shadow border-2 border-gray-200">
+                            <div class="text-center mb-6">
+                                <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center mb-4">
+                                    <i class="fas fa-pen-fancy text-4xl text-gray-600"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-700">文档写手</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                    <i class="fas fa-file-word text-blue-500"></i>
+                                    <span>写PRD文档</span>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                    <i class="fas fa-list-check text-blue-500"></i>
+                                    <span>罗列功能点</span>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                    <i class="fas fa-clock text-blue-500"></i>
+                                    <span>输出文档</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧：新角色 -->
+                    <div class="scroll-reveal">
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-8 card-shadow text-white">
+                            <div class="text-center mb-6">
+                                <div class="w-24 h-24 bg-white bg-opacity-20 rounded-full mx-auto flex items-center justify-center mb-4 relative">
+                                    <div class="pulse-ring"></div>
+                                    <i class="fas fa-chess-king text-4xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold">战略协调者</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4 p-4 bg-white bg-opacity-20 rounded-xl">
+                                    <i class="fas fa-bullseye text-orange-300"></i>
+                                    <span>判断什么值得建</span>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 bg-white bg-opacity-20 rounded-xl">
+                                    <i class="fas fa-puzzle-piece text-orange-300"></i>
+                                    <span>整合多源信息</span>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 bg-white bg-opacity-20 rounded-xl">
+                                    <i class="fas fa-handshake text-orange-300"></i>
+                                    <span>对齐团队认知</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据可视化 -->
+                <div class="mt-20 bg-white rounded-3xl p-8 card-shadow scroll-reveal">
+                    <h3 class="text-2xl font-bold text-center mb-8">产品经理核心能力重要性调研</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="text-center">
+                            <div class="relative w-40 h-40 mx-auto mb-4">
+                                <svg class="w-full h-full chart-ring" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#6b46c1" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="116" stroke-linecap="round"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-3xl font-bold text-purple-600">59%</span>
+                                </div>
+                            </div>
+                            <p class="font-semibold text-gray-700">战略与商业敏锐度</p>
+                            <p class="text-sm text-gray-500">未来最关键技能</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="relative w-40 h-40 mx-auto mb-4">
+                                <svg class="w-full h-full chart-ring" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#ed8936" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="221" stroke-linecap="round"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-3xl font-bold text-orange-500">22%</span>
+                                </div>
+                            </div>
+                            <p class="font-semibold text-gray-700">AI/ML 技术能力</p>
+                            <p class="text-xs text-gray-400 mt-1">AI/ML = 人工智能/机器学习，指利用算法让机器从数据中学习并做出预测或决策的技术</p>
+                            <p class="text-sm text-gray-500 mt-1">仅少数高管认为关键</p>
+                        </div>
+                    </div>
+                    <p class="text-center text-sm text-gray-400 mt-6">数据来源：产品管理高管调研报告</p>
+                    
+                    <!-- 新增高赞评论 -->
+                    <div class="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 scroll-reveal">
+                        <h4 class="text-lg font-bold text-center mb-6 text-gray-800">💬 社区高赞观点 / Community Insights</h4>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-xl p-4 border-l-4 border-blue-500 shadow-sm">
+                                <p class="text-sm italic text-gray-700">"The PM's job isn't to know all the answers, but to ask the right questions and align everyone on the answers we find."</p>
+                                <p class="text-xs text-gray-500 mt-1">"产品经理的工作不是知道所有答案，而是提出正确的问题，并让所有人对找到的答案保持一致"</p>
+                                <p class="text-xs text-gray-400 mt-2">— @alex_pm_director | VP of Product / 产品VP · 328 likes 👍</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border-l-4 border-purple-500 shadow-sm">
+                                <p class="text-sm italic text-gray-700">"AI won't replace PMs, but PMs who use AI will replace those who don't."</p>
+                                <p class="text-xs text-gray-500 mt-1">"AI不会取代产品经理，但会用AI的产品经理会取代那些不会的"</p>
+                                <p class="text-xs text-gray-400 mt-2">— @tech_lead_maya | Senior PM / 高级产品经理 · 256 likes 👍</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border-l-4 border-green-500 shadow-sm">
+                                <p class="text-sm italic text-gray-700">"Writing a PRD is thinking. If you can't write it clearly, you don't understand it yet."</p>
+                                <p class="text-xs text-gray-500 mt-1">"写PRD就是思考。如果你不能清晰地写出来，说明你还没有理解它"</p>
+                                <p class="text-xs text-gray-400 mt-2">— @carter_writes | Product Lead / 产品负责人 · 189 likes 👍</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第四部分：5个实用技巧 -->
+    <section class="min-h-screen bg-white py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">现代PRD的5个实践原则</h2>
+            <p class="text-gray-500 text-center mb-16 scroll-reveal">来自一线产品经理的真实经验总结</p>
+            
+            <div class="max-w-4xl mx-auto space-y-4">
+                <!-- 技巧1 -->
+                <div class="expand-card bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-6 cursor-pointer scroll-reveal" onclick="toggleCard(this)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">1</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">写作即思考</h3>
+                                <p class="text-gray-500 text-sm mt-1">用PRD测试逻辑、暴露盲点</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-blue-200 hidden content">
+                        <p class="text-gray-700 leading-relaxed">
+                            如果某个部分感觉"模糊"或难以解释，说明发现工作尚未充分。高亮你的假设，标示需要更多数据的地方。
+                        </p>
+                        <div class="mt-4 p-4 bg-white rounded-xl border-l-4 border-blue-500">
+                            <p class="text-sm italic text-gray-600">"If a section feels vague or hard to explain, you haven't done enough discovery work."</p>
+                            <p class="text-xs text-gray-400 mt-1">"如果某个部分感觉模糊或难以解释，说明你还没有做够充分的探索"</p>
+                            <p class="text-xs text-gray-400 mt-2">— @pm_james | Reader Comment / 读者评论</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 技巧2 -->
+                <div class="expand-card bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl p-6 cursor-pointer scroll-reveal" onclick="toggleCard(this)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">2</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">人工智能辅助探索，而非决策</h3>
+                                <p class="text-gray-500 text-sm mt-1">你提供意图，AI处理格式</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-purple-200 hidden content">
+                        <p class="text-gray-700 leading-relaxed">
+                            将原始发现笔记输入AI，让它起草"问题陈述"或"边界情况"。你提供意图和判断，AI处理格式和框架。
+                        </p>
+                        <div class="mt-4 p-4 bg-white rounded-xl border-l-4 border-purple-500">
+                            <p class="text-sm italic text-gray-600">"Feed AI your raw discovery notes... You provide the intent and judgment, let AI handle formatting and frameworks."</p>
+                            <p class="text-xs text-gray-400 mt-1">"把原始发现笔记喂给AI...你提供意图和判断，让AI处理格式和框架"</p>
+                            <p class="text-xs text-gray-400 mt-2">— @ai_pm_lead | Top-voted Practice Share / 高赞实践分享</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 技巧3 -->
+                <div class="expand-card bg-gradient-to-r from-green-50 to-green-100 rounded-2xl p-6 cursor-pointer scroll-reveal" onclick="toggleCard(this)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">3</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">从规定转向赋能</h3>
+                                <p class="text-gray-500 text-sm mt-1">设定边界，而非蓝图</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-green-200 hidden content">
+                        <p class="text-gray-700 leading-relaxed">
+                            对"为什么"（客户问题）保持严格，但对"如何"（解决方案）向工程师和设计师开放。
+                        </p>
+                        <div class="mt-4 p-4 bg-white rounded-xl border-l-4 border-green-500">
+                            <p class="text-sm italic text-gray-600">"Be rigid about the 'why', but open to the 'how' with engineers and designers."</p>
+                            <p class="text-xs text-gray-400 mt-1">"对'为什么'保持严格，但对'如何'向工程师和设计师开放"</p>
+                            <p class="text-xs text-gray-400 mt-2">— @martin_product | Community Discussion / 社区讨论</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 技巧4 -->
+                <div class="expand-card bg-gradient-to-r from-orange-50 to-orange-100 rounded-2xl p-6 cursor-pointer scroll-reveal" onclick="toggleCard(this)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">4</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">适度规模</h3>
+                                <p class="text-gray-500 text-sm mt-1">匹配文档与任务复杂度</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-orange-200 hidden content">
+                        <p class="text-gray-700 leading-relaxed">
+                            实验项目用1页简报，高风险架构变更才用完整规范。不要让文档重量超过价值。
+                        </p>
+                        <div class="mt-4 grid grid-cols-3 gap-3">
+                            <div class="p-3 bg-white rounded-lg text-center">
+                                <div class="text-2xl font-bold text-orange-600">1页</div>
+                                <div class="text-xs text-gray-500">实验/迭代</div>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg text-center">
+                                <div class="text-2xl font-bold text-orange-600">2-3页</div>
+                                <div class="text-xs text-gray-500">功能开发</div>
+                            </div>
+                            <div class="p-3 bg-white rounded-lg text-center">
+                                <div class="text-2xl font-bold text-orange-600">完整</div>
+                                <div class="text-xs text-gray-500">架构变更</div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-white rounded-xl border-l-4 border-orange-500">
+                            <p class="text-sm italic text-gray-600">"The best PRD is the one that gets read and updated. Length is inversely proportional to usage."</p>
+                            <p class="text-xs text-gray-400 mt-1">"最好的PRD是会被阅读和更新的文档。长度与使用率成反比"</p>
+                            <p class="text-xs text-gray-400 mt-2">— @dave_consultant | 10yr PM Veteran / 10年产品老兵</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 技巧5 -->
+                <div class="expand-card bg-gradient-to-r from-red-50 to-red-100 rounded-2xl p-6 cursor-pointer scroll-reveal" onclick="toggleCard(this)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">5</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">保持活力</h3>
+                                <p class="text-gray-500 text-sm mt-1">活态枢纽，持续演进</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-red-200 hidden content">
+                        <p class="text-gray-700 leading-relaxed">
+                            将PRD融入团队仪式，让它成为随认知演进的活态枢纽，但始终保持与"为什么"的连接。
+                        </p>
+                        <div class="mt-4 p-4 bg-white rounded-xl border-l-4 border-red-500">
+                            <p class="text-sm italic text-gray-600">"Make it the living hub that evolves with your understanding, but always stay connected to the 'why'."</p>
+                            <p class="text-xs text-gray-400 mt-1">"让它成为随认知演进的活态枢纽，但始终保持与'为什么'的连接"</p>
+                            <p class="text-xs text-gray-400 mt-2">— @lisa_strategy | Product Community Consensus / 产品社区共识</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-950 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-bold mb-4">当AI能建万物</p>
+            <p class="text-xl text-orange-400 mb-8">人要知道什么值得建</p>
+            <div class="flex justify-center gap-6 text-gray-400">
+                <span>参考文章：<a href="https://productify.substack.com/p/the-prd-isnt-dead-its-evolving-for" class="underline hover:text-white">PRD从未死去，它只是进化了</a></span>
+            </div>
+            <p class="text-sm text-gray-600 mt-8">© 2026 交互式知识卡片 | 用 YouMind 创建</p>
+        </div>
+    </footer>
+
+    <script>
+        // 打字机效果
+        const text = "当AI能建万物，人要知道什么值得建";
+        let index = 0;
+        const typingElement = document.getElementById('typing-text');
+        
+        function typeWriter() {
+            if (index < text.length) {
+                typingElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        setTimeout(typeWriter, 500);
+        
+        // 滚动进度条
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+        
+        // 滚动显示动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        
+        // 展开/折叠卡片
+        function toggleCard(card) {
+            const content = card.querySelector('.content');
+            const icon = card.querySelector('.fa-chevron-down');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                card.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                card.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // 分享菜单
+        function toggleShareMenu() {
+            const menu = document.getElementById('share-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // 复制链接
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('链接已复制到剪贴板！');
+            toggleShareMenu();
+        }
+        
+        // 生成海报（简化版提示）
+        function generatePoster() {
+            alert('海报生成功能：可使用 html2canvas 库实现，将结果卡片转为图片下载');
+            toggleShareMenu();
+        }
+        
+        // 点击外部关闭分享菜单
+        document.addEventListener('click', (e) => {
+            const shareBtn = document.querySelector('.share-btn');
+            const menu = document.getElementById('share-menu');
+            if (!shareBtn.contains(e.target) && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
