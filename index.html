@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRD从未死去，它只是进化了</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
@@ -155,8 +154,6 @@
             opacity: 0.5;
         }
     </style>
-</head>
-<body>
 
 
 
@@ -713,46 +710,94 @@
         
         // 生成海报
         async function generatePoster() {
-            // 选择要截图的区域（只截取封面section）
-            const element = document.querySelector('section');
+            toggleShareMenu();
+            
+            // 显示加载提示
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'poster-loading';
+            loadingDiv.innerHTML = `
+                <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;">
+                    <div style="font-size:48px;margin-bottom:20px;">📸</div>
+                    <div style="font-size:18px;">正在生成海报...</div>
+                    <div style="margin-top:10px;font-size:14px;opacity:0.7;">请稍候</div>
+                </div>
+            `;
+            document.body.appendChild(loadingDiv);
             
             try {
-                // 显示生成中提示
-                const btn = document.querySelector('.share-btn button');
-                const originalContent = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                // 动态加载 html2canvas
+                if (typeof html2canvas === 'undefined') {
+                    await new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                        script.onload = resolve;
+                        script.onerror = reject;
+                        document.head.appendChild(script);
+                    });
+                }
                 
-                // 使用 html2canvas 截图
-                const canvas = await html2canvas(element, {
+                // 获取封面区域作为海报内容
+                const coverSection = document.querySelector('section.gradient-bg');
+                
+                // 创建海报容器
+                const posterContainer = document.createElement('div');
+                posterContainer.style.cssText = `
+                    position: fixed;
+                    top: -9999px;
+                    left: -9999px;
+                    width: 750px;
+                    background: linear-gradient(135deg, #1a365d 0%, #6b46c1 50%, #ed8936 100%);
+                    padding: 60px;
+                    border-radius: 20px;
+                    box-sizing: border-box;
+                `;
+                
+                // 构建海报内容
+                posterContainer.innerHTML = `
+                    <div style="text-align: center; color: white; font-family: 'Noto Sans SC', sans-serif;">
+                        <div style="font-size: 80px; margin-bottom: 30px;">📄→🤖</div>
+                        <h1 style="font-size: 48px; font-weight: 900; margin-bottom: 20px; line-height: 1.2;">PRD从未死去</h1>
+                        <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 40px; opacity: 0.9;">它只是<span style="color: #fbbf24;">进化了</span></h2>
+                        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 30px; margin: 40px 0;">
+                            <p style="font-size: 24px; margin: 0;">当AI能建万物</p>
+                            <p style="font-size: 24px; margin: 10px 0 0 0;">人要知道什么值得建</p>
+                        </div>
+                        <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.2);">
+                            <p style="font-size: 18px; opacity: 0.8; margin: 0;">扫码阅读完整文章</p>
+                            <p style="font-size: 14px; opacity: 0.6; margin: 10px 0 0 0;">© 2026 交互式知识卡片 | 用 YouMind 创建</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(posterContainer);
+                
+                // 生成海报图片
+                const canvas = await html2canvas(posterContainer, {
                     scale: 2,
                     useCORS: true,
-                    logging: false,
-                    backgroundColor: '#1a365d'
+                    allowTaint: true,
+                    backgroundColor: null,
+                    logging: false
                 });
                 
-                // 转换为图片数据
-                const image = canvas.toDataURL('image/png');
+                // 移除临时元素
+                document.body.removeChild(posterContainer);
+                document.body.removeChild(loadingDiv);
                 
-                // 创建下载链接
+                // 转换为图片并下载
                 const link = document.createElement('a');
-                link.download = 'PRD进化论_海报_' + new Date().getTime() + '.png';
-                link.href = image;
-                
-                // 触发下载
-                document.body.appendChild(link);
+                link.download = 'PRD从未死去-海报.png';
+                link.href = canvas.toDataURL('image/png');
                 link.click();
-                document.body.removeChild(link);
                 
-                // 恢复按钮状态
-                btn.innerHTML = originalContent;
                 alert('海报已生成并下载！');
                 
-            } catch (err) {
-                console.error('生成失败:', err);
-                alert('海报生成失败，请重试');
+            } catch (error) {
+                console.error('生成海报失败:', error);
+                const loadingEl = document.getElementById('poster-loading');
+                if (loadingEl) document.body.removeChild(loadingEl);
+                alert('海报生成失败，请重试。错误: ' + error.message);
             }
-            
-            toggleShareMenu();
         }
         
         // 点击外部关闭分享菜单
@@ -764,5 +809,3 @@
             }
         });
     </script>
-</body>
-</html>
