@@ -709,9 +709,50 @@
         }
         
         // 生成海报（简化版提示）
-        function generatePoster() {
-            alert('海报生成功能：可使用 html2canvas 库实现，将结果卡片转为图片下载');
-            toggleShareMenu();
+       // 生成海报
+async function generatePoster() {
+    // 选择要截图的区域（整个页面主体）
+    const element = document.body;
+    
+    try {
+        // 显示生成中提示
+        const btn = document.querySelector('.share-btn button');
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        // 使用 html2canvas 截图
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: null
+        });
+        
+        // 转换为图片数据
+        const image = canvas.toDataURL('image/png');
+        
+        // 创建下载链接
+        const link = document.createElement('a');
+        link.download = 'PRD进化论_海报_' + new Date().getTime() + '.png';
+        link.href = image;
+        
+        // 触发下载
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // 恢复按钮状态
+        btn.innerHTML = originalContent;
+        alert('海报已生成并下载！');
+        
+    } catch (err) {
+        console.error('生成失败:', err);
+        alert('海报生成失败，请重试');
+    }
+    
+    toggleShareMenu();
+}
+
         }
         
         // 点击外部关闭分享菜单
