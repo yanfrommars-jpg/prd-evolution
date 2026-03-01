@@ -1,12 +1,12 @@
-
-
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRD从未死去，它只是进化了</title>
     <script src="https://cdn.tailwindcss.com"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
         
@@ -155,6 +155,8 @@
             opacity: 0.5;
         }
     </style>
+</head>
+<body>
 
 
 
@@ -709,49 +711,50 @@
             toggleShareMenu();
         }
         
-       // 生成海报
-async function generatePoster() {
-    // 选择要截图的区域（整个页面主体）
-    const element = document.body;
-    
-    try {
-        // 显示生成中提示
-        const btn = document.querySelector('.share-btn button');
-        const originalContent = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        // 生成海报
+        async function generatePoster() {
+            // 选择要截图的区域（只截取封面section）
+            const element = document.querySelector('section');
+            
+            try {
+                // 显示生成中提示
+                const btn = document.querySelector('.share-btn button');
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                
+                // 使用 html2canvas 截图
+                const canvas = await html2canvas(element, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#1a365d'
+                });
+                
+                // 转换为图片数据
+                const image = canvas.toDataURL('image/png');
+                
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.download = 'PRD进化论_海报_' + new Date().getTime() + '.png';
+                link.href = image;
+                
+                // 触发下载
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // 恢复按钮状态
+                btn.innerHTML = originalContent;
+                alert('海报已生成并下载！');
+                
+            } catch (err) {
+                console.error('生成失败:', err);
+                alert('海报生成失败，请重试');
+            }
+            
+            toggleShareMenu();
+        }
         
-        // 使用 html2canvas 截图
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            logging: false,
-            backgroundColor: null
-        });
-        
-        // 转换为图片数据
-        const image = canvas.toDataURL('image/png');
-        
-        // 创建下载链接
-        const link = document.createElement('a');
-        link.download = 'PRD进化论_海报_' + new Date().getTime() + '.png';
-        link.href = image;
-        
-        // 触发下载
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // 恢复按钮状态
-        btn.innerHTML = originalContent;
-        alert('海报已生成并下载！');
-        
-    } catch (err) {
-        console.error('生成失败:', err);
-        alert('海报生成失败，请重试');
-    }
-    
-    toggleShareMenu();
-}
         // 点击外部关闭分享菜单
         document.addEventListener('click', (e) => {
             const shareBtn = document.querySelector('.share-btn');
@@ -761,3 +764,5 @@ async function generatePoster() {
             }
         });
     </script>
+</body>
+</html>
