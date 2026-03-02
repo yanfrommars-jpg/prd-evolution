@@ -116,6 +116,135 @@
         .expand-card.expanded {
             max-height: 500px;
         }
+        
+        /* 移动端响应式优化 */
+        @media (max-width: 768px) {
+            /* 分享按钮位置调整 */
+            .share-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .share-btn button {
+                width: 48px;
+                height: 48px;
+            }
+            
+            /* 标题字体适配 */
+            h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            h2 {
+                font-size: 1.75rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            /* 图标大小适配 */
+            .fa-file-alt, .fa-robot {
+                font-size: 3rem !important;
+            }
+            
+            .fa-arrow-right {
+                font-size: 2rem !important;
+                margin: 0 0.5rem !important;
+            }
+            
+            /* 时间线布局调整 */
+            .absolute.left-1\/2 {
+                left: 20px !important;
+            }
+            
+            .grid.md\\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .md\\:text-right {
+                text-align: left !important;
+            }
+            
+            /* 对比卡片全宽 */
+            .max-w-6xl .grid.md\\:grid-cols-2 > div {
+                margin-bottom: 1rem;
+            }
+            
+            /* 数据图表适配 */
+            .w-40.h-40 {
+                width: 120px !important;
+                height: 120px !important;
+            }
+            
+            /* 玻璃效果卡片内边距 */
+            .glass-effect {
+                padding: 1.5rem !important;
+            }
+            
+            /* 原则卡片间距 */
+            .max-w-4xl .space-y-6 > div {
+                padding: 1.25rem !important;
+            }
+            
+            /* 三列网格改为单列 */
+            .grid-cols-3 {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .grid-cols-3 > div {
+                margin-bottom: 0.5rem;
+            }
+            
+            /* 底部页脚文字 */
+            footer .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            footer .text-xl {
+                font-size: 1rem !important;
+            }
+        }
+        
+        /* 小屏手机额外优化 */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem !important;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            .container {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            
+            .min-h-screen {
+                min-height: auto !important;
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+        }
+        
+        /* 防止横向滚动 */
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* 图片自适应 */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 
 
@@ -174,23 +303,23 @@
             <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">PRD的演变历程</h2>
             <p class="text-gray-500 text-center mb-16 scroll-reveal">从瀑布到敏捷，再到AI时代的进化之路</p>
             
-            <div class="max-w-5xl mx-auto relative">
-                <!-- 时间线 -->
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-600 via-purple-600 to-orange-500"></div>
+            <div class="max-w-5xl mx-auto relative px-4 sm:px-0">
+                <!-- 时间线 - 移动端隐藏，桌面端显示 -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-600 via-purple-600 to-orange-500"></div>
                 
                 <!-- 1980s-1990s -->
                 <div class="relative mb-12 scroll-reveal">
                     <div class="flex items-center justify-center mb-4">
-                        <div class="bg-blue-600 text-white px-4 py-2 rounded-full font-bold z-10">1980s-1990s</div>
+                        <div class="bg-blue-600 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">1980s-1990s</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="md:text-right">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">瀑布模型时代</h3>
-                            <p class="text-gray-600">厚重的需求规格说明书（SRS），动辄数百页，追求"一次做对"</p>
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
+                        <div class="md:text-right order-2 md:order-1">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">瀑布模型时代</h3>
+                            <p class="text-sm sm:text-base text-gray-600">厚重的需求规格说明书（SRS），动辄数百页，追求"一次做对"</p>
                         </div>
-                        <div class="flex items-start">
+                        <div class="flex items-start order-1 md:order-2 justify-start md:justify-start">
                             <div class="bg-blue-100 p-4 rounded-xl">
-                                <i class="fas fa-file-alt text-2xl text-blue-600 mb-2"></i>
+                                <i class="fas fa-file-alt text-xl sm:text-2xl text-blue-600 mb-2"></i>
                                 <p class="text-sm text-gray-600">文档即契约</p>
                             </div>
                         </div>
@@ -200,18 +329,18 @@
                 <!-- 2001 -->
                 <div class="relative mb-12 scroll-reveal">
                     <div class="flex items-center justify-center mb-4">
-                        <div class="bg-purple-600 text-white px-4 py-2 rounded-full font-bold z-10">2001</div>
+                        <div class="bg-purple-600 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">2001</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="md:text-right flex items-start justify-end">
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
+                        <div class="md:text-right flex items-start justify-start md:justify-end order-1">
                             <div class="bg-purple-100 p-4 rounded-xl">
-                                <i class="fas fa-running text-2xl text-purple-600 mb-2"></i>
+                                <i class="fas fa-running text-xl sm:text-2xl text-purple-600 mb-2"></i>
                                 <p class="text-sm text-gray-600">敏捷宣言</p>
                             </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">敏捷革命</h3>
-                            <p class="text-gray-600">"可工作的软件胜过详尽的文档"，用户故事取代冗长规格</p>
+                        <div class="order-2">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">敏捷革命</h3>
+                            <p class="text-sm sm:text-base text-gray-600">"可工作的软件胜过详尽的文档"，用户故事取代冗长规格</p>
                         </div>
                     </div>
                 </div>
@@ -219,16 +348,16 @@
                 <!-- 2010s -->
                 <div class="relative mb-12 scroll-reveal">
                     <div class="flex items-center justify-center mb-4">
-                        <div class="bg-indigo-600 text-white px-4 py-2 rounded-full font-bold z-10">2010s</div>
+                        <div class="bg-indigo-600 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">2010s</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="md:text-right">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">精益创业时代</h3>
-                            <p class="text-gray-600">假设驱动开发，MVP（最小可行产品）思维，文档让位于实验</p>
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
+                        <div class="md:text-right order-2 md:order-1">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">精益创业时代</h3>
+                            <p class="text-sm sm:text-base text-gray-600">假设驱动开发，MVP（最小可行产品）思维，文档让位于实验</p>
                         </div>
-                        <div class="flex items-start">
+                        <div class="flex items-start order-1 md:order-2 justify-start md:justify-start">
                             <div class="bg-indigo-100 p-4 rounded-xl">
-                                <i class="fas fa-flask text-2xl text-indigo-600 mb-2"></i>
+                                <i class="fas fa-flask text-xl sm:text-2xl text-indigo-600 mb-2"></i>
                                 <p class="text-sm text-gray-600">验证学习</p>
                             </div>
                         </div>
@@ -238,18 +367,18 @@
                 <!-- 2020s -->
                 <div class="relative scroll-reveal">
                     <div class="flex items-center justify-center mb-4">
-                        <div class="bg-orange-500 text-white px-4 py-2 rounded-full font-bold z-10">2020s</div>
+                        <div class="bg-orange-500 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">2020s</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="md:text-right flex items-start justify-end">
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
+                        <div class="md:text-right flex items-start justify-start md:justify-end order-1">
                             <div class="bg-orange-100 p-4 rounded-xl">
-                                <i class="fas fa-robot text-2xl text-orange-500 mb-2"></i>
+                                <i class="fas fa-robot text-xl sm:text-2xl text-orange-500 mb-2"></i>
                                 <p class="text-sm text-gray-600">AI协作</p>
                             </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">AI时代</h3>
-                            <p class="text-gray-600">模块化活态文档，人机协作写作，PRD回归"对齐工具"本质</p>
+                        <div class="order-2">
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">AI时代</h3>
+                            <p class="text-sm sm:text-base text-gray-600">模块化活态文档，人机协作写作，PRD回归"对齐工具"本质</p>
                         </div>
                     </div>
                 </div>
@@ -266,56 +395,54 @@
             <div class="max-w-6xl mx-auto">
                 <div class="grid md:grid-cols-2 gap-8">
                     <!-- 左侧：传统PRD -->
-                    <div class="bg-gray-900 rounded-3xl p-8 text-white scroll-reveal">
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="bg-red-500 text-xs font-bold px-3 py-1 rounded-full">传统思维</span>
-                            <i class="fas fa-book text-3xl opacity-60"></i>
+                    <div class="bg-gray-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white scroll-reveal">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <span class="bg-red-500 text-xs font-bold px-2 sm:px-3 py-1 rounded-full">传统思维</span>
+                            <i class="fas fa-book text-2xl sm:text-3xl opacity-60"></i>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">厚重文档</h3>
-                        <ul class="space-y-3 text-gray-300">
-                            <li class="flex items-center gap-3">
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">厚重文档</h3>
+                        <ul class="space-y-2 sm:space-y-3 text-gray-300 text-sm sm:text-base">
+                            <li class="flex items-center gap-2 sm:gap-3">
                                 <i class="fas fa-file-alt text-red-400"></i>
                                 30-50页详尽规范
                             </li>
-                            <li class="flex items-center gap-3">
+                            <li class="flex items-center gap-2 sm:gap-3">
                                 <i class="fas fa-lock text-red-400"></i>
                                 一次性交付，难以修改
                             </li>
-                            <li class="flex items-center gap-3">
+                            <li class="flex items-center gap-2 sm:gap-3">
                                 <i class="fas fa-user-slash text-red-400"></i>
                                 写完没人看
                             </li>
                         </ul>
-                        <div class="mt-6 p-4 bg-gray-800 rounded-xl border-l-4 border-red-500">
-                            <p class="text-sm italic">庞大而稳定的文档，却无人问津</p>
-                            <p class="text-xs text-gray-500 mt-2">— @senior_pm（10年产品经验）</p>
+                        <div class="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-800 rounded-xl border-l-4 border-red-500">
+                            <p class="text-xs sm:text-sm italic">庞大而稳定的文档，却无人问津</p>
                         </div>
                     </div>
                     
                     <!-- 右侧：AI时代PRD -->
-                    <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-8 text-white scroll-reveal">
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="bg-green-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">AI时代</span>
-                            <i class="fas fa-network-wired text-3xl opacity-80"></i>
+                    <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white scroll-reveal">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <span class="bg-green-400 text-gray-900 text-xs font-bold px-2 sm:px-3 py-1 rounded-full">AI时代</span>
+                            <i class="fas fa-network-wired text-2xl sm:text-3xl opacity-80"></i>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">模块化简报</h3>
-                        <ul class="space-y-3 text-blue-100">
-                            <li class="flex items-center gap-3">
+                        <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">模块化简报</h3>
+                        <ul class="space-y-2 sm:space-y-3 text-blue-100 text-sm sm:text-base">
+                            <li class="flex items-center gap-2 sm:gap-3">
                                 <i class="fas fa-layer-group text-green-300"></i>
                                 1页问题 + 2页方案
                             </li>
-                            <li class="flex items-center gap-3">
+                            <li class="flex items-center gap-2 sm:gap-3">
                                 <i class="fas fa-sync text-green-300"></i>
                                 活态文档，持续演进
                             </li>
-                            <li class="flex items-center gap-3">
+                            <li class="flex items-center gap-2 sm:gap-3">
                                 <i class="fas fa-users text-green-300"></i>
                                 团队对齐的核心工具
                             </li>
                         </ul>
-                        <div class="mt-6 p-4 bg-white bg-opacity-20 rounded-xl border-l-4 border-green-400">
-                            <p class="text-sm italic text-blue-100">获胜的团队是那些在建什么和为什么建上保持一致的人</p>
-                            <p class="text-xs text-blue-200 mt-2">— @lead_pm（工程团队负责人）</p>
+                        <div class="mt-4 sm:mt-6 p-3 sm:p-4 bg-white bg-opacity-20 rounded-xl border-l-4 border-green-400">
+                            <p class="text-xs sm:text-sm italic text-blue-100">获胜的团队是那些在建什么和为什么建上保持一致的人</p>
                         </div>
                     </div>
                 </div>
@@ -332,23 +459,23 @@
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <!-- 左侧：旧角色 -->
                     <div class="scroll-reveal">
-                        <div class="bg-white rounded-3xl p-8 card-shadow border-2 border-gray-200">
-                            <div class="text-center mb-6">
-                                <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center mb-4">
-                                    <i class="fas fa-pen-fancy text-4xl text-gray-600"></i>
+                        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 card-shadow border-2 border-gray-200">
+                            <div class="text-center mb-4 sm:mb-6">
+                                <div class="w-16 h-16 sm:w-24 sm:h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-pen-fancy text-2xl sm:text-4xl text-gray-600"></i>
                                 </div>
-                                <h3 class="text-2xl font-bold text-gray-700">文档写手</h3>
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-700">文档写手</h3>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                            <div class="space-y-2 sm:space-y-4">
+                                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-xl text-sm sm:text-base">
                                     <i class="fas fa-file-word text-blue-500"></i>
                                     <span>写PRD文档</span>
                                 </div>
-                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-xl text-sm sm:text-base">
                                     <i class="fas fa-list-check text-blue-500"></i>
                                     <span>罗列功能点</span>
                                 </div>
-                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-xl text-sm sm:text-base">
                                     <i class="fas fa-clock text-blue-500"></i>
                                     <span>输出文档</span>
                                 </div>
@@ -358,24 +485,24 @@
                     
                     <!-- 右侧：新角色 -->
                     <div class="scroll-reveal">
-                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-8 card-shadow text-white">
-                            <div class="text-center mb-6">
-                                <div class="w-24 h-24 bg-white bg-opacity-20 rounded-full mx-auto flex items-center justify-center mb-4 relative">
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl sm:rounded-3xl p-5 sm:p-8 card-shadow text-white">
+                            <div class="text-center mb-4 sm:mb-6">
+                                <div class="w-16 h-16 sm:w-24 sm:h-24 bg-white bg-opacity-20 rounded-full mx-auto flex items-center justify-center mb-3 sm:mb-4 relative">
                                     <div class="pulse-ring"></div>
-                                    <i class="fas fa-chess-king text-4xl"></i>
+                                    <i class="fas fa-chess-king text-2xl sm:text-4xl"></i>
                                 </div>
-                                <h3 class="text-2xl font-bold">战略协调者</h3>
+                                <h3 class="text-xl sm:text-2xl font-bold">战略协调者</h3>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4 p-4 bg-white bg-opacity-20 rounded-xl">
+                            <div class="space-y-2 sm:space-y-4">
+                                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-white bg-opacity-20 rounded-xl text-sm sm:text-base">
                                     <i class="fas fa-bullseye text-orange-300"></i>
                                     <span>判断什么值得建</span>
                                 </div>
-                                <div class="flex items-center gap-4 p-4 bg-white bg-opacity-20 rounded-xl">
+                                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-white bg-opacity-20 rounded-xl text-sm sm:text-base">
                                     <i class="fas fa-puzzle-piece text-orange-300"></i>
                                     <span>整合多源信息</span>
                                 </div>
-                                <div class="flex items-center gap-4 p-4 bg-white bg-opacity-20 rounded-xl">
+                                <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-white bg-opacity-20 rounded-xl text-sm sm:text-base">
                                     <i class="fas fa-handshake text-orange-300"></i>
                                     <span>对齐团队认知</span>
                                 </div>
@@ -385,37 +512,37 @@
                 </div>
                 
                 <!-- 数据可视化 -->
-                <div class="mt-20 bg-white rounded-3xl p-8 card-shadow scroll-reveal">
-                    <h3 class="text-2xl font-bold text-center mb-8">PM核心能力重要性调研</h3>
-                    <div class="grid md:grid-cols-2 gap-8">
+                <div class="mt-12 sm:mt-20 bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 card-shadow scroll-reveal">
+                    <h3 class="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">PM核心能力重要性调研</h3>
+                    <div class="grid grid-cols-2 gap-4 sm:gap-8">
                         <div class="text-center">
-                            <div class="relative w-40 h-40 mx-auto mb-4">
+                            <div class="relative w-28 h-28 sm:w-40 sm:h-40 mx-auto mb-3 sm:mb-4">
                                 <svg class="w-full h-full chart-ring" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
                                     <circle cx="50" cy="50" r="45" fill="none" stroke="#6b46c1" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="116" stroke-linecap="round"></circle>
                                 </svg>
                                 <div class="absolute inset-0 flex items-center justify-center">
-                                    <span class="text-3xl font-bold text-purple-600">59%</span>
+                                    <span class="text-2xl sm:text-3xl font-bold text-purple-600">59%</span>
                                 </div>
                             </div>
-                            <p class="font-semibold text-gray-700">战略与商业敏锐度</p>
-                            <p class="text-sm text-gray-500">未来最关键技能</p>
+                            <p class="font-semibold text-gray-700 text-sm sm:text-base">战略与商业敏锐度</p>
+                            <p class="text-xs sm:text-sm text-gray-500">未来最关键技能</p>
                         </div>
                         <div class="text-center">
-                            <div class="relative w-40 h-40 mx-auto mb-4">
+                            <div class="relative w-28 h-28 sm:w-40 sm:h-40 mx-auto mb-3 sm:mb-4">
                                 <svg class="w-full h-full chart-ring" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
                                     <circle cx="50" cy="50" r="45" fill="none" stroke="#ed8936" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="221" stroke-linecap="round"></circle>
                                 </svg>
                                 <div class="absolute inset-0 flex items-center justify-center">
-                                    <span class="text-3xl font-bold text-orange-500">22%</span>
+                                    <span class="text-2xl sm:text-3xl font-bold text-orange-500">22%</span>
                                 </div>
                             </div>
-                            <p class="font-semibold text-gray-700">AI/ML技术能力</p>
-                            <p class="text-sm text-gray-500">仅少数高管认为关键</p>
+                            <p class="font-semibold text-gray-700 text-sm sm:text-base">AI/ML技术能力</p>
+                            <p class="text-xs sm:text-sm text-gray-500">仅少数高管认为关键</p>
                         </div>
                     </div>
-                    <p class="text-center text-sm text-gray-400 mt-6">数据来源：Productboard CPO调研报告</p>
+                    <p class="text-center text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6">数据来源：Productboard CPO调研报告</p>
                 </div>
             </div>
         </div>
@@ -429,68 +556,68 @@
             
             <div class="max-w-4xl mx-auto space-y-6">
                 <!-- 原则1 -->
-                <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-start gap-5">
-                        <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">1</div>
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl sm:rounded-2xl p-5 sm:p-8 scroll-reveal">
+                    <div class="flex items-start gap-3 sm:gap-5">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-lg sm:text-2xl flex-shrink-0">1</div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">写作即思考</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-3">
+                            <h3 class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">写作即思考</h3>
+                            <p class="text-gray-600 text-sm sm:text-lg leading-relaxed mb-2 sm:mb-3">
                                 用PRD测试逻辑、暴露盲点。如果某个部分感觉"模糊"或难以解释，说明发现工作尚未充分。高亮你的假设，标示需要更多数据的地方。
                             </p>
-                            <p class="text-sm text-blue-600 font-medium">💡 模糊即信号，写作是思考的外化</p>
+                            <p class="text-xs sm:text-sm text-blue-600 font-medium">💡 模糊即信号，写作是思考的外化</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 原则2 -->
-                <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-start gap-5">
-                        <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">2</div>
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl sm:rounded-2xl p-5 sm:p-8 scroll-reveal">
+                    <div class="flex items-start gap-3 sm:gap-5">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-lg sm:text-2xl flex-shrink-0">2</div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">AI辅助探索，而非决策</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-3">
+                            <h3 class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">AI辅助探索，而非决策</h3>
+                            <p class="text-gray-600 text-sm sm:text-lg leading-relaxed mb-2 sm:mb-3">
                                 你提供意图和判断，AI处理格式和框架。将原始调研笔记输入AI，让它起草"问题陈述"或"边界情况"，但保留最终决策权。
                             </p>
-                            <p class="text-sm text-purple-600 font-medium">🤖 人提问题，AI给选项，人做选择</p>
+                            <p class="text-xs sm:text-sm text-purple-600 font-medium">🤖 人提问题，AI给选项，人做选择</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 原则3 -->
-                <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-start gap-5">
-                        <div class="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">3</div>
+                <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-xl sm:rounded-2xl p-5 sm:p-8 scroll-reveal">
+                    <div class="flex items-start gap-3 sm:gap-5">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-green-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-lg sm:text-2xl flex-shrink-0">3</div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">从规定转向赋能</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-3">
+                            <h3 class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">从规定转向赋能</h3>
+                            <p class="text-gray-600 text-sm sm:text-lg leading-relaxed mb-2 sm:mb-3">
                                 设定边界，而非蓝图。对"为什么"（客户问题）保持严格，但对"如何"（解决方案）向工程师和设计师开放。
                             </p>
-                            <p class="text-sm text-green-600 font-medium">🎯 严格问题，开放解法</p>
+                            <p class="text-xs sm:text-sm text-green-600 font-medium">🎯 严格问题，开放解法</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 原则4 -->
-                <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-start gap-5">
-                        <div class="w-14 h-14 bg-orange-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">4</div>
+                <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl sm:rounded-2xl p-5 sm:p-8 scroll-reveal">
+                    <div class="flex items-start gap-3 sm:gap-5">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-lg sm:text-2xl flex-shrink-0">4</div>
                         <div class="flex-1">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">适度规模</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-4">
+                            <h3 class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">适度规模</h3>
+                            <p class="text-gray-600 text-sm sm:text-lg leading-relaxed mb-3 sm:mb-4">
                                 匹配文档与任务复杂度。不要让文档重量超过价值。
                             </p>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div class="bg-white rounded-xl p-4 text-center shadow-sm">
-                                    <div class="text-3xl font-bold text-orange-600 mb-1">1页</div>
-                                    <div class="text-sm text-gray-500">实验/迭代</div>
+                            <div class="grid grid-cols-3 gap-2 sm:gap-4">
+                                <div class="bg-white rounded-lg sm:rounded-xl p-2 sm:p-4 text-center shadow-sm">
+                                    <div class="text-xl sm:text-3xl font-bold text-orange-600 mb-1">1页</div>
+                                    <div class="text-xs sm:text-sm text-gray-500">实验/迭代</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 text-center shadow-sm">
-                                    <div class="text-3xl font-bold text-orange-600 mb-1">2-3页</div>
-                                    <div class="text-sm text-gray-500">功能开发</div>
+                                <div class="bg-white rounded-lg sm:rounded-xl p-2 sm:p-4 text-center shadow-sm">
+                                    <div class="text-xl sm:text-3xl font-bold text-orange-600 mb-1">2-3页</div>
+                                    <div class="text-xs sm:text-sm text-gray-500">功能开发</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 text-center shadow-sm">
-                                    <div class="text-3xl font-bold text-orange-600 mb-1">完整</div>
-                                    <div class="text-sm text-gray-500">架构变更</div>
+                                <div class="bg-white rounded-lg sm:rounded-xl p-2 sm:p-4 text-center shadow-sm">
+                                    <div class="text-xl sm:text-3xl font-bold text-orange-600 mb-1">完整</div>
+                                    <div class="text-xs sm:text-sm text-gray-500">架构变更</div>
                                 </div>
                             </div>
                         </div>
@@ -498,23 +625,23 @@
                 </div>
 
                 <!-- 原则5 -->
-                <div class="bg-gradient-to-r from-red-50 to-red-100 rounded-2xl p-8 scroll-reveal">
-                    <div class="flex items-start gap-5">
-                        <div class="w-14 h-14 bg-red-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">5</div>
+                <div class="bg-gradient-to-r from-red-50 to-red-100 rounded-xl sm:rounded-2xl p-5 sm:p-8 scroll-reveal">
+                    <div class="flex items-start gap-3 sm:gap-5">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-red-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold text-lg sm:text-2xl flex-shrink-0">5</div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">保持活力</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-3">
+                            <h3 class="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">保持活力</h3>
+                            <p class="text-gray-600 text-sm sm:text-lg leading-relaxed mb-2 sm:mb-3">
                                 活态枢纽，持续演进。将PRD融入团队仪式，让它随认知迭代更新，但始终保持与"为什么"的连接。
                             </p>
-                            <p class="text-sm text-red-600 font-medium">🔄 像维护代码一样维护PRD</p>
+                            <p class="text-xs sm:text-sm text-red-600 font-medium">🔄 像维护代码一样维护PRD</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 一句话总结 -->
-                <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-8 text-center scroll-reveal mt-8">
-                    <p class="text-gray-300 text-lg mb-2">当AI能建万物，人要知道什么值得建</p>
-                    <p class="text-orange-400 text-2xl font-bold">PRD，正是这个"判断力"的载体</p>
+                <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl sm:rounded-2xl p-5 sm:p-8 text-center scroll-reveal mt-6 sm:mt-8">
+                    <p class="text-gray-300 text-base sm:text-lg mb-2">当AI能建万物，人要知道什么值得建</p>
+                    <p class="text-orange-400 text-xl sm:text-2xl font-bold">PRD，正是这个"判断力"的载体</p>
                 </div>
             </div>
         </div>
@@ -585,18 +712,18 @@
                 </div>
 
                 <!-- 关键数据 -->
-                <div class="grid md:grid-cols-3 gap-6 scroll-reveal">
-                    <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 text-center">
-                        <div class="text-4xl font-bold text-white mb-2">67%</div>
-                        <p class="text-blue-200 text-sm">保持PRD更新的团队<br>需求理解偏差率降低</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 scroll-reveal">
+                    <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div class="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">67%</div>
+                        <p class="text-blue-200 text-xs sm:text-sm">保持PRD更新的团队<br>需求理解偏差率降低</p>
                     </div>
-                    <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl p-6 text-center">
-                        <div class="text-4xl font-bold text-white mb-2">3x</div>
-                        <p class="text-purple-200 text-sm">使用现代PRD方法的团队<br>决策速度提升倍数</p>
+                    <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div class="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">3x</div>
+                        <p class="text-purple-200 text-xs sm:text-sm">使用现代PRD方法的团队<br>决策速度提升倍数</p>
                     </div>
-                    <div class="bg-gradient-to-br from-orange-600 to-orange-800 rounded-2xl p-6 text-center">
-                        <div class="text-4xl font-bold text-white mb-2">80%</div>
-                        <p class="text-orange-200 text-sm">成功的AI协作<br>取决于清晰的PRD输入</p>
+                    <div class="bg-gradient-to-br from-orange-600 to-orange-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                        <div class="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">80%</div>
+                        <p class="text-orange-200 text-xs sm:text-sm">成功的AI协作<br>取决于清晰的PRD输入</p>
                     </div>
                 </div>
             </div>
