@@ -287,8 +287,14 @@
                 它只是<span class="text-orange-300">进化了</span>
             </h2>
             
-            <div class="glass-effect rounded-2xl p-8 max-w-3xl mx-auto">
-                <p class="text-xl md:text-2xl text-white font-medium typing-cursor" id="typing-text"></p>
+            <div class="glass-effect rounded-2xl p-6 md:p-8 max-w-3xl mx-auto">
+                <!-- 桌面端：单行打字机效果 -->
+                <p class="hidden md:block text-2xl text-white font-medium typing-cursor" id="typing-text"></p>
+                <!-- 移动端：直接显示，分2行 -->
+                <div class="md:hidden text-white font-medium text-center">
+                    <p class="text-lg mb-1">当AI能建万物，</p>
+                    <p class="text-lg">人要知道什么值得建</p>
+                </div>
             </div>
             
             <div class="mt-16 animate-bounce">
