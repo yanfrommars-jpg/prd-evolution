@@ -303,62 +303,70 @@
             <h2 class="text-4xl font-bold text-center mb-4 scroll-reveal">PRD的演变历程</h2>
             <p class="text-gray-500 text-center mb-16 scroll-reveal">从瀑布到敏捷，再到AI时代的进化之路</p>
             
-            <div class="max-w-5xl mx-auto relative px-4 sm:px-0">
-                <!-- 时间线 - 移动端隐藏，桌面端显示 -->
+            <div class="max-w-5xl mx-auto relative">
+                <!-- 桌面端时间线 - 居中 -->
                 <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-600 via-purple-600 to-orange-500"></div>
+                <!-- 移动端时间线 - 左侧 -->
+                <div class="md:hidden absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 via-purple-600 to-orange-500"></div>
                 
                 <!-- 1980s-1990s -->
-                <div class="relative mb-12 scroll-reveal">
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="bg-blue-600 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">1980s-1990s</div>
+                <div class="relative mb-8 md:mb-12 scroll-reveal">
+                    <!-- 移动端节点 -->
+                    <div class="md:hidden absolute left-4 top-0 w-3 h-3 bg-blue-600 rounded-full transform -translate-x-1/2 border-2 border-white shadow"></div>
+                    <!-- 年代标签 -->
+                    <div class="flex items-center md:justify-center mb-3 md:mb-4">
+                        <div class="bg-blue-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-full font-bold z-10 text-xs md:text-sm md:ml-0 ml-10">1980s-1990s</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
-                        <div class="md:text-right order-2 md:order-1">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">瀑布模型时代</h3>
-                            <p class="text-sm sm:text-base text-gray-600">厚重的需求规格说明书（SRS），动辄数百页，追求"一次做对"</p>
+                    <!-- 内容区域 - 桌面端双列，移动端单列 -->
+                    <div class="md:grid md:grid-cols-2 md:gap-8 ml-10 md:ml-0">
+                        <div class="md:text-right mb-2 md:mb-0">
+                            <h3 class="text-base md:text-xl font-bold text-gray-800 mb-1">瀑布模型时代</h3>
+                            <p class="text-sm text-gray-600">厚重的需求规格说明书（SRS），动辄数百页，追求"一次做对"</p>
                         </div>
-                        <div class="flex items-start order-1 md:order-2 justify-start md:justify-start">
-                            <div class="bg-blue-100 p-4 rounded-xl">
-                                <i class="fas fa-file-alt text-xl sm:text-2xl text-blue-600 mb-2"></i>
-                                <p class="text-sm text-gray-600">文档即契约</p>
+                        <div class="hidden md:flex md:items-start">
+                            <div class="bg-blue-100 p-3 md:p-4 rounded-xl inline-flex items-center gap-2">
+                                <i class="fas fa-file-alt text-blue-600"></i>
+                                <span class="text-sm text-gray-600">文档即契约</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 2001 -->
-                <div class="relative mb-12 scroll-reveal">
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="bg-purple-600 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">2001</div>
+                <div class="relative mb-8 md:mb-12 scroll-reveal">
+                    <div class="md:hidden absolute left-4 top-0 w-3 h-3 bg-purple-600 rounded-full transform -translate-x-1/2 border-2 border-white shadow"></div>
+                    <div class="flex items-center md:justify-center mb-3 md:mb-4">
+                        <div class="bg-purple-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-full font-bold z-10 text-xs md:text-sm md:ml-0 ml-10">2001</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
-                        <div class="md:text-right flex items-start justify-start md:justify-end order-1">
-                            <div class="bg-purple-100 p-4 rounded-xl">
-                                <i class="fas fa-running text-xl sm:text-2xl text-purple-600 mb-2"></i>
-                                <p class="text-sm text-gray-600">敏捷宣言</p>
+                    <div class="md:grid md:grid-cols-2 md:gap-8 ml-10 md:ml-0">
+                        <div class="hidden md:flex md:items-start md:justify-end">
+                            <div class="bg-purple-100 p-3 md:p-4 rounded-xl inline-flex items-center gap-2">
+                                <i class="fas fa-running text-purple-600"></i>
+                                <span class="text-sm text-gray-600">敏捷宣言</span>
                             </div>
                         </div>
-                        <div class="order-2">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">敏捷革命</h3>
-                            <p class="text-sm sm:text-base text-gray-600">"可工作的软件胜过详尽的文档"，用户故事取代冗长规格</p>
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-xl font-bold text-gray-800 mb-1">敏捷革命</h3>
+                            <p class="text-sm text-gray-600">"可工作的软件胜过详尽的文档"，用户故事取代冗长规格</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 2010s -->
-                <div class="relative mb-12 scroll-reveal">
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="bg-indigo-600 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">2010s</div>
+                <div class="relative mb-8 md:mb-12 scroll-reveal">
+                    <div class="md:hidden absolute left-4 top-0 w-3 h-3 bg-indigo-600 rounded-full transform -translate-x-1/2 border-2 border-white shadow"></div>
+                    <div class="flex items-center md:justify-center mb-3 md:mb-4">
+                        <div class="bg-indigo-600 text-white px-3 md:px-4 py-1 md:py-2 rounded-full font-bold z-10 text-xs md:text-sm md:ml-0 ml-10">2010s</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
-                        <div class="md:text-right order-2 md:order-1">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">精益创业时代</h3>
-                            <p class="text-sm sm:text-base text-gray-600">假设驱动开发，MVP（最小可行产品）思维，文档让位于实验</p>
+                    <div class="md:grid md:grid-cols-2 md:gap-8 ml-10 md:ml-0">
+                        <div class="md:text-right mb-2 md:mb-0">
+                            <h3 class="text-base md:text-xl font-bold text-gray-800 mb-1">精益创业时代</h3>
+                            <p class="text-sm text-gray-600">假设驱动开发，MVP（最小可行产品）思维，文档让位于实验</p>
                         </div>
-                        <div class="flex items-start order-1 md:order-2 justify-start md:justify-start">
-                            <div class="bg-indigo-100 p-4 rounded-xl">
-                                <i class="fas fa-flask text-xl sm:text-2xl text-indigo-600 mb-2"></i>
-                                <p class="text-sm text-gray-600">验证学习</p>
+                        <div class="hidden md:flex md:items-start">
+                            <div class="bg-indigo-100 p-3 md:p-4 rounded-xl inline-flex items-center gap-2">
+                                <i class="fas fa-flask text-indigo-600"></i>
+                                <span class="text-sm text-gray-600">验证学习</span>
                             </div>
                         </div>
                     </div>
@@ -366,19 +374,20 @@
                 
                 <!-- 2020s -->
                 <div class="relative scroll-reveal">
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="bg-orange-500 text-white px-4 py-2 rounded-full font-bold z-10 text-sm sm:text-base">2020s</div>
+                    <div class="md:hidden absolute left-4 top-0 w-3 h-3 bg-orange-500 rounded-full transform -translate-x-1/2 border-2 border-white shadow"></div>
+                    <div class="flex items-center md:justify-center mb-3 md:mb-4">
+                        <div class="bg-orange-500 text-white px-3 md:px-4 py-1 md:py-2 rounded-full font-bold z-10 text-xs md:text-sm md:ml-0 ml-10">2020s</div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4 md:gap-8">
-                        <div class="md:text-right flex items-start justify-start md:justify-end order-1">
-                            <div class="bg-orange-100 p-4 rounded-xl">
-                                <i class="fas fa-robot text-xl sm:text-2xl text-orange-500 mb-2"></i>
-                                <p class="text-sm text-gray-600">AI协作</p>
+                    <div class="md:grid md:grid-cols-2 md:gap-8 ml-10 md:ml-0">
+                        <div class="hidden md:flex md:items-start md:justify-end">
+                            <div class="bg-orange-100 p-3 md:p-4 rounded-xl inline-flex items-center gap-2">
+                                <i class="fas fa-robot text-orange-500"></i>
+                                <span class="text-sm text-gray-600">AI协作</span>
                             </div>
                         </div>
-                        <div class="order-2">
-                            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">AI时代</h3>
-                            <p class="text-sm sm:text-base text-gray-600">模块化活态文档，人机协作写作，PRD回归"对齐工具"本质</p>
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-xl font-bold text-gray-800 mb-1">AI时代</h3>
+                            <p class="text-sm text-gray-600">模块化活态文档，人机协作写作，PRD回归"对齐工具"本质</p>
                         </div>
                     </div>
                 </div>
