@@ -6,6 +6,7 @@
     <title>PRD从未死去，它只是进化了</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
         
@@ -90,13 +91,6 @@
             transition: stroke-dashoffset 1s ease-out;
         }
         
-        .share-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        
         .expand-card {
             max-height: 80px;
             overflow: hidden;
@@ -119,17 +113,25 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* 分享按钮 - 移动端优先 */
+        /* 分享按钮 - 必须固定在右下角 */
         .share-btn {
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
-            z-index: 1000;
+            position: fixed !important;
+            bottom: 24px !important;
+            right: 24px !important;
+            z-index: 9999 !important;
+        }
+        
+        .share-btn > div {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            margin-bottom: 8px;
         }
         
         .share-btn button {
-            width: 44px;
-            height: 44px;
+            width: 56px !important;
+            height: 56px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
         }
         
         /* 标题层级 - 移动端基准 */
@@ -149,7 +151,7 @@
         
         /* 图标大小 - 移动端 */
         .fa-file-alt, .fa-robot {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
         }
         
         .fa-arrow-right {
@@ -311,19 +313,19 @@
     <!-- 进度指示器 -->
     <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 z-50 transition-all duration-300" id="progress-bar" style="width: 0%"></div>
 
-    <!-- 分享按钮 -->
-    <div class="share-btn">
-        <button onclick="toggleShareMenu()" class="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white shadow-lg hover:shadow-2xl transition-all flex items-center justify-center">
-            <i class="fas fa-share-alt text-xl"></i>
-        </button>
+    <!-- 分享按钮 - 固定在右下角 -->
+    <div id="share-btn" class="fixed bottom-6 right-6 z-[9999]">
         <div id="share-menu" class="hidden absolute bottom-16 right-0 bg-white rounded-xl shadow-2xl p-3 space-y-2 w-48">
-            <button onclick="copyLink()" class="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg flex items-center gap-3">
-                <i class="fas fa-link text-gray-600"></i> 复制链接
+            <button onclick="copyLink()" class="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg flex items-center gap-3 text-gray-700">
+                <i class="fas fa-link w-4"></i> 复制链接
             </button>
-            <button onclick="generatePoster()" class="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg flex items-center gap-3">
-                <i class="fas fa-image text-gray-600"></i> 生成海报
+            <button onclick="generatePoster()" class="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg flex items-center gap-3 text-gray-700">
+                <i class="fas fa-image w-4"></i> 生成海报
             </button>
         </div>
+        <button id="share-toggle-btn" class="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white shadow-lg hover:shadow-2xl transition-all flex items-center justify-center">
+            <i class="fas fa-share-alt text-xl"></i>
+        </button>
     </div>
 
     <!-- Section 1: 封面 -->
@@ -386,7 +388,7 @@
                         </div>
                         <div class="hidden md:flex md:items-start">
                             <div class="bg-blue-100 p-3 md:p-4 rounded-xl inline-flex items-center gap-2">
-                                <i class="fas fa-file-alt text-blue-600"></i>
+                                <i class="fas fa-file-signature text-blue-600"></i>
                                 <span class="text-sm text-gray-600">文档即契约</span>
                             </div>
                         </div>
@@ -442,7 +444,7 @@
                     <div class="md:grid md:grid-cols-2 md:gap-8 ml-10 md:ml-0">
                         <div class="hidden md:flex md:items-start md:justify-end">
                             <div class="bg-orange-100 p-3 md:p-4 rounded-xl inline-flex items-center gap-2">
-                                <i class="fas fa-robot text-orange-500"></i>
+                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
                                 <span class="text-sm text-gray-600">AI协作</span>
                             </div>
                         </div>
@@ -473,7 +475,7 @@
                         <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">厚重文档</h3>
                         <ul class="space-y-2 sm:space-y-3 text-gray-300 text-sm sm:text-base">
                             <li class="flex items-center gap-2 sm:gap-3">
-                                <i class="fas fa-file-alt text-red-400"></i>
+                                <svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                 30-50页详尽规范
                             </li>
                             <li class="flex items-center gap-2 sm:gap-3">
@@ -495,7 +497,7 @@
                     <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl sm:rounded-3xl p-5 sm:p-8 text-white scroll-reveal">
                         <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <span class="bg-green-400 text-gray-900 text-xs font-bold px-2 sm:px-3 py-1 rounded-full">AI时代</span>
-                            <i class="fas fa-network-wired text-2xl sm:text-3xl opacity-80"></i>
+                            <i class="fas fa-sitemap text-2xl sm:text-3xl opacity-80"></i>
                         </div>
                         <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">模块化简报</h3>
                         <ul class="space-y-2 sm:space-y-3 text-blue-100 text-sm sm:text-base">
@@ -614,7 +616,7 @@
                             <p class="text-xs sm:text-sm text-gray-500">仅少数高管认为关键</p>
                         </div>
                     </div>
-                    <p class="text-center text-xs sm:text-sm text-gray-400 mt-4 sm:mt-6">数据来源：Productboard CPO调研报告</p>
+                    <p class="text-center text-xs sm:text-sm text-gray-400 mt-4">数据来源：Productboard CPO调研报告</p>
                 </div>
                 
                 <!-- 关键数据卡片 -->
@@ -633,7 +635,7 @@
                             <p class="text-orange-200 text-xs sm:text-sm">成功的AI协作<br>取决于清晰的PRD输入</p>
                         </div>
                     </div>
-                    <p class="text-center text-xs text-gray-400 mt-4">Data synthesized from Productboard 2024 CPO Survey, McKinsey Digital Transformation Report, and GitHub Copilot Research</p>
+                    <p class="text-center text-xs text-gray-400 mt-4">数据来源：Productboard 2024 CPO调研报告、麦肯锡数字化转型报告、GitHub Copilot研究</p>
                 </div>
             </div>
         </div>
@@ -751,14 +753,14 @@
                         <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
                             <i class="fas fa-lightbulb text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <div class="text-center sm:text-left">
+                        <div class="text-left">
                             <h3 class="text-lg sm:text-xl font-bold text-white mb-3">PRD的悖论：写的人不读，读的人不写</h3>
                             <p class="text-gray-300 leading-relaxed mb-4">
                                 传统PRD的最大问题是信息不对称。写PRD的PM花数周时间完善文档，但工程师和设计真正阅读的只是其中10%。现代PRD应该是一种"对话工具"而非"交付物"——它应该促成讨论，而不是结束讨论。
                             </p>
                             <div class="bg-gray-900 rounded-xl p-4 border-l-4 border-blue-500">
                                 <p class="text-sm text-gray-400 italic">最好的PRD是能引发对话的，而不是结束对话的。</p>
-                                <p class="text-xs text-gray-600 mt-2">— @throwaway_pm（Hacker News，12年PM经验）</p>
+                                <p class="text-xs text-gray-500 mt-2">— @throwaway_pm（Hacker News，12年PM经验）</p>
                             </div>
                         </div>
                     </div>
@@ -770,14 +772,14 @@
                         <div class="w-12 h-12 sm:w-16 sm:h-16 bg-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
                             <i class="fas fa-sync-alt text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <div class="text-center sm:text-left">
+                        <div class="text-left">
                             <h3 class="text-lg sm:text-xl font-bold text-white mb-3">从"一次性交付"到"持续对齐"</h3>
                             <p class="text-gray-300 leading-relaxed mb-4">
                                 在敏捷环境中，需求变化是常态。PRD不应该是一个静态文档，而应该是一个"活态知识库"。每次迭代都应该更新PRD，让它成为团队共享的"真相源"。研究表明，保持PRD更新的团队，需求理解偏差率降低67%。
                             </p>
                             <div class="bg-gray-900 rounded-xl p-4 border-l-4 border-purple-500">
                                 <p class="text-sm text-gray-400 italic">像对待代码一样对待PRD：给它版本控制、审阅它、重构它。</p>
-                                <p class="text-xs text-gray-600 mt-2">— @mike_engineer（Product Hunt，YC校友）</p>
+                                <p class="text-xs text-gray-500 mt-2">— @mike_engineer（Product Hunt，YC校友）</p>
                             </div>
                         </div>
                     </div>
@@ -787,16 +789,16 @@
                 <div class="bg-gray-800 rounded-3xl p-5 sm:p-8 scroll-reveal">
                     <div class="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6">
                         <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
-                            <i class="fas fa-users-cog text-xl sm:text-2xl text-white"></i>
+                            <i class="fas fa-user-cog text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <div class="text-center sm:text-left">
+                        <div class="text-left">
                             <h3 class="text-lg sm:text-xl font-bold text-white mb-3">AI时代PM的核心竞争力：判断与整合</h3>
                             <p class="text-gray-300 leading-relaxed mb-4">
                                 当AI可以生成无限多的解决方案时，PM的价值不再是"想出解决方案"，而是"判断哪个方案值得做"。这要求PM具备更深的客户洞察、更强的商业敏感度和更好的跨职能协调能力。PRD正是这种判断力的载体。
                             </p>
                             <div class="bg-gray-900 rounded-xl p-4 border-l-4 border-green-500">
                                 <p class="text-sm text-gray-400 italic">AI给你答案，PM提出正确的问题。</p>
-                                <p class="text-xs text-gray-600 mt-2">— @pm_veteran（Reddit，前Apple/Netflix PM）</p>
+                                <p class="text-xs text-gray-500 mt-2">— @pm_veteran（Reddit，前Apple/Netflix PM）</p>
                             </div>
                         </div>
                     </div>
@@ -916,31 +918,114 @@
             }
         }
         
-        // 分享菜单
-        function toggleShareMenu() {
-            const menu = document.getElementById('share-menu');
-            menu.classList.toggle('hidden');
-        }
+        // 分享菜单 - 使用事件监听器
+        const shareBtn = document.getElementById('share-toggle-btn');
+        const shareMenu = document.getElementById('share-menu');
         
-        // 复制链接
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('链接已复制到剪贴板！');
-            toggleShareMenu();
-        }
-        
-        // 生成海报（简化版提示）
-        function generatePoster() {
-            alert('海报生成功能：可使用 html2canvas 库实现，将resultCard转为图片下载');
-            toggleShareMenu();
+        if (shareBtn && shareMenu) {
+            shareBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                shareMenu.classList.toggle('hidden');
+            });
         }
         
         // 点击外部关闭分享菜单
         document.addEventListener('click', (e) => {
-            const shareBtn = document.querySelector('.share-btn');
-            const menu = document.getElementById('share-menu');
-            if (!shareBtn.contains(e.target) && !menu.classList.contains('hidden')) {
-                menu.classList.add('hidden');
+            const shareBtnElement = document.getElementById('share-btn');
+            const shareMenuElement = document.getElementById('share-menu');
+            if (shareBtnElement && shareMenuElement && !shareMenuElement.classList.contains('hidden')) {
+                if (!shareBtnElement.contains(e.target)) {
+                    shareMenuElement.classList.add('hidden');
+                }
+            }
+        });
+        
+        // 复制链接
+        function copyLink() {
+            // 复制固定的URL
+            const urlToCopy = 'https://youmind.com/boards/019ca493-1f74-7dad-8d7b-24cdd4048ad2';
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(urlToCopy).then(() => {
+                    showToast('链接已复制到剪贴板！');
+                }).catch(() => {
+                    fallbackCopy(urlToCopy);
+                });
+            } else {
+                fallbackCopy(urlToCopy);
+            }
+            
+            // 关闭菜单
+            if (shareMenu) shareMenu.classList.add('hidden');
+        }
+        
+        // 降级复制方法
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('链接已复制到剪贴板！');
+            } catch (err) {
+                showToast('复制失败，请手动复制链接');
+            }
+            document.body.removeChild(textarea);
+        }
+        
+        // 显示Toast提示
+        function showToast(message) {
+            // 移除已存在的toast
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-2xl';
+            toast.style.cssText = 'z-index: 99999; animation: fadeInOut 2s ease-in-out;';
+            toast.textContent = message;
+            
+            // 添加动画样式（如果还没添加）
+            if (!document.getElementById('toast-style')) {
+                const style = document.createElement('style');
+                style.id = 'toast-style';
+                style.textContent = `
+                    @keyframes fadeInOut {
+                        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                        15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                        85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 2000);
+        }
+        
+        // 生成海报功能
+        function generatePoster() {
+            // 隐藏分享菜单
+            const shareMenu = document.getElementById('share-menu');
+            if (shareMenu) shareMenu.classList.add('hidden');
+            
+            // 提示用户
+            showToast('长按页面另存为图片即可分享');
+        }
+        
+        // 旧的点击外部关闭逻辑（保留兼容性）
+        document.addEventListener('click', (e) => {
+            const shareMenuElement = document.getElementById('share-menu');
+            const shareBtnElement = document.getElementById('share-btn');
+            if (shareMenuElement && shareBtnElement && !shareMenuElement.classList.contains('hidden')) {
+                if (!shareBtnElement.contains(e.target)) {
+                    shareMenuElement.classList.add('hidden');
+                }
             }
         });
     </script>
