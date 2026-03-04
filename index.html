@@ -892,7 +892,7 @@
             rootMargin: '0px 0px -50px 0px'
         };
         
-        const observer = new IntersectionObserver((entries) => {
+        const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
@@ -900,7 +900,7 @@
             });
         }, observerOptions);
         
-        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
         
         // 展开/折叠卡片
         function toggleCard(card) {
@@ -1017,15 +1017,4 @@
             // 提示用户
             showToast('长按页面另存为图片即可分享');
         }
-        
-        // 旧的点击外部关闭逻辑（保留兼容性）
-        document.addEventListener('click', (e) => {
-            const shareMenuElement = document.getElementById('share-menu');
-            const shareBtnElement = document.getElementById('share-btn');
-            if (shareMenuElement && shareBtnElement && !shareMenuElement.classList.contains('hidden')) {
-                if (!shareBtnElement.contains(e.target)) {
-                    shareMenuElement.classList.add('hidden');
-                }
-            }
-        });
     </script>
